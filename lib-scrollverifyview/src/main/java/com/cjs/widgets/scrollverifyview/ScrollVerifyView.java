@@ -254,8 +254,16 @@ public class ScrollVerifyView extends ImageView {
         int baseBmpHeight = mBackBitmap.getHeight();
         l.d(TAG, "baseBmpWidth:" + baseBmpWidth);
         l.d(TAG, "baseBmpHeight:" + baseBmpHeight);
-        mBlockWidth = (mBlockWidth == 0 ? mBackBitmap.getWidth() / mBlockWidthDivide : mBlockWidth);
-        mBlockHeight = (mBlockHeight == 0 ? mBackBitmap.getHeight() / mBlockHeightDivide : mBlockHeight);
+        int blockDrawableWidth = mMovableBlockDrawable.getIntrinsicWidth();
+        int blockDrawableHeight = mMovableBlockDrawable.getIntrinsicHeight();
+        if (blockDrawableHeight > 0 && blockDrawableWidth > 0 && mBlockWidth==0 && mBlockHeight==0) {
+            mBlockWidth=blockDrawableWidth;
+            mBlockHeight=blockDrawableHeight;
+        }else{
+            mBlockWidth = (mBlockWidth == 0 ? mBackBitmap.getWidth() / mBlockWidthDivide : mBlockWidth);
+            mBlockHeight = (mBlockHeight == 0 ? mBackBitmap.getHeight() / mBlockHeightDivide : mBlockHeight);
+        }
+
         //通过日志可以看出，首次，getWidth和getHeight是获取不到值的，所以取getMeasuredWidth和getMeasuredHeight
         l.d(TAG, "maxHorizontalScrollDistance before:" + mMaxHorizontalScrollDistance);
         //可用最大滑动值的计算方式是获得两个滑块的中心点的x坐标的差值的最大值，就是最大宽度减去左右padding再减去两个滑块的半宽
