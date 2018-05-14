@@ -608,7 +608,7 @@ public class ScrollVerifyView extends ImageView {
         mStartBlockX = mStartBlockX > xEnd ? xEnd : mStartBlockX;
         mStartBlockX = mStartBlockX < xStart ? xStart : mStartBlockX;
         int yStart = mViewPadding;
-        int yEnd = mBackBitmap.getHeight() - mViewPadding - mBlockWidth;
+        int yEnd = mBackBitmap.getHeight() - mViewPadding - mBlockHeight;
         mStartBlockY = mStartBlockY > yEnd ? yEnd : mStartBlockY;
         mStartBlockY = mStartBlockY < yStart ? yStart : mStartBlockY;
     }
