@@ -200,6 +200,11 @@ public class ScrollVerifyView extends ImageView {
         initView(context, attrs, defStyleAttr, defStyleRes);
     }
 
+    /**
+     * 设置滑动验证监听器
+     *
+     * @param scrollVerifyListener
+     */
     public void setScrollVerifyListener(ScrollVerifyListener scrollVerifyListener) {
         mScrollVerifyListener = scrollVerifyListener;
     }
@@ -528,7 +533,7 @@ public class ScrollVerifyView extends ImageView {
             case MotionEvent.ACTION_DOWN:
                 isMove = false;
                 l.e(TAG, "action down");
-                if (isBlockTouchable && isTouchInsideMovableBlock(touchX, touchY)) {
+                if (isBlockTouchable) {
                     lastTouchX = touchX;
                     lastTouchY = touchY;
                     firstTouchX = touchX;
@@ -560,7 +565,7 @@ public class ScrollVerifyView extends ImageView {
             case MotionEvent.ACTION_MOVE:
                 isMove = isValidDrag(touchX, touchY, lastTouchX, lastTouchY, 1)
                         || isValidDrag(touchX, touchY, firstTouchX, firstTouchY, 1);
-                if (isMove) {
+                if (isMove && isTouchInsideMovableBlock(touchX, touchY)) {
                     l.e(TAG, "action move");
                     switch (mScrollMode) {
                         case MODE_SCROLL_FREE:
@@ -847,6 +852,7 @@ public class ScrollVerifyView extends ImageView {
 
     /**
      * 起始滑块是否可以手指拖拽
+     *
      * @return
      */
     public boolean isBlockTouchable() {
@@ -855,6 +861,7 @@ public class ScrollVerifyView extends ImageView {
 
     /**
      * 设置起始滑块是否可以手指拖拽
+     *
      * @param blockTouchable
      */
     public void setBlockTouchable(boolean blockTouchable) {
@@ -863,6 +870,7 @@ public class ScrollVerifyView extends ImageView {
 
     /**
      * 获取拖拽验证的偏差值
+     *
      * @return
      */
     public int getValidOffset() {
@@ -871,6 +879,7 @@ public class ScrollVerifyView extends ImageView {
 
     /**
      * 设置拖拽验证的偏差值
+     *
      * @param validOffset 像素
      */
     public void setValidOffset(int validOffset) {
@@ -879,6 +888,7 @@ public class ScrollVerifyView extends ImageView {
 
     /**
      * 是否已经开启了避免随机生成滑块过近的功能
+     *
      * @return
      */
     public boolean isAvoidGenerateTooClose() {
@@ -887,6 +897,7 @@ public class ScrollVerifyView extends ImageView {
 
     /**
      * 设置是否开启避免随机生成滑块过近的功能
+     *
      * @param avoidGenerateTooClose
      */
     public void setAvoidGenerateTooClose(boolean avoidGenerateTooClose) {
@@ -895,6 +906,7 @@ public class ScrollVerifyView extends ImageView {
 
     /**
      * 获取起始滑块的形状图片drawable
+     *
      * @return
      */
     public Drawable getMovableBlockDrawable() {
@@ -903,6 +915,7 @@ public class ScrollVerifyView extends ImageView {
 
     /**
      * 设置起始滑块的形状图片drawable
+     *
      * @param movableBlockDrawable
      */
     public void setMovableBlockDrawable(Drawable movableBlockDrawable) {
@@ -912,6 +925,7 @@ public class ScrollVerifyView extends ImageView {
 
     /**
      * 获取目标滑块的形状图片的drawable
+     *
      * @return
      */
     public Drawable getTargetBlockDrawable() {
@@ -920,6 +934,7 @@ public class ScrollVerifyView extends ImageView {
 
     /**
      * 目标滑块的形状图片的drawable
+     *
      * @param targetBlockDrawable
      */
     public void setTargetBlockDrawable(Drawable targetBlockDrawable) {
