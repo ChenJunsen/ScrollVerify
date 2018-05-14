@@ -1,4 +1,5 @@
 apply plugin: 'com.android.library'
+apply plugin: 'com.novoda.bintray-release'//应用bintray插件
 
 android {
     compileSdkVersion 26
@@ -31,4 +32,14 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+}
+
+publish {
+    repoName='CJS-Android-Widget_Library'//此处是坑，这个是你建立BintaryRespository的库名，如果你没有设置这个值，默认就是maven
+    userOrg = 'chenjunsen'//你注册bintray.com的用户名
+    groupId = 'cjs.android.widgets'//jcenter上的路径
+    artifactId = 'ScrollVerifyView'//项目名称
+    publishVersion = '1.0.0'//版本号
+    desc = 'An android widget to implement the graphic puzzle scroll verify effect.'//描述，不重要
+    website = 'https://github.com/ChenJunsen/ScrollVerify'//网站，不重要
 }
