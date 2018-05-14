@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:scaleType="fitXY"
-        android:src="@mipmap/pic1"/>
+        android:src="@mipmap/pic2"/>
 
     <Button
         android:id="@+id/btn_invalidate"
