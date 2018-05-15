@@ -39,7 +39,7 @@ publish {
     userOrg = 'chenjunsen'//你注册bintray.com的用户名
     groupId = 'cjs.android.widgets'//jcenter上的路径
     artifactId = 'ScrollVerifyView'//项目名称
-    publishVersion = '1.0.0'//版本号
-    desc = 'An android widget to implement the graphic puzzle scroll verify effect.'//描述，不重要
+    publishVersion = '1.0.1'//版本号
+    desc = 'An android widget to implement the graphic puzzle scroll verify effect.V1.0.1 add setter of open random rotate'//描述，不重要
     website = 'https://github.com/ChenJunsen/ScrollVerify'//网站，不重要
 }
