@@ -715,6 +715,18 @@ public class ScrollVerifyView extends ImageView {
         return mRotateDegree;
     }
 
+    public boolean isOpenRandomRotate() {
+        return isOpenRandomRotate;
+    }
+
+    /**
+     * 设置是否开启随机旋转滑块角度
+     * @param openRandomRotate
+     */
+    public void setOpenRandomRotate(boolean openRandomRotate) {
+        isOpenRandomRotate = openRandomRotate;
+    }
+
     /**
      * 设置滑块的旋转角度
      *
