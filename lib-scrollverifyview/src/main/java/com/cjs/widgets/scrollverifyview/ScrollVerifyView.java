@@ -171,6 +171,10 @@ public class ScrollVerifyView extends ImageView {
      */
     private Bitmap mMovableSrcBitmap;
     /**
+     * 目标滑块的位图资源。该变量还有一个作用。首先起始和目标滑块的大小应该一致，而且会先使用目标滑块。因此在计算宽高时，以目标滑块位图宽高为准。
+     */
+    private Bitmap mTargetBlockBitmap;
+    /**
      * 控件首次创建的时候的起始滑块的横坐标，重置时候用
      */
     private float mOriStartBlockX;
@@ -256,14 +260,13 @@ public class ScrollVerifyView extends ImageView {
         l.d(TAG, "baseBmpHeight:" + baseBmpHeight);
         int blockDrawableWidth = mMovableBlockDrawable.getIntrinsicWidth();
         int blockDrawableHeight = mMovableBlockDrawable.getIntrinsicHeight();
-        if (blockDrawableHeight > 0 && blockDrawableWidth > 0 && mBlockWidth==0 && mBlockHeight==0) {
-            mBlockWidth=blockDrawableWidth;
-            mBlockHeight=blockDrawableHeight;
-        }else{
+        if (blockDrawableHeight > 0 && blockDrawableWidth > 0 && mBlockWidth == 0 && mBlockHeight == 0) {
+            mBlockWidth = blockDrawableWidth;
+            mBlockHeight = blockDrawableHeight;
+        } else {
             mBlockWidth = (mBlockWidth == 0 ? mBackBitmap.getWidth() / mBlockWidthDivide : mBlockWidth);
             mBlockHeight = (mBlockHeight == 0 ? mBackBitmap.getHeight() / mBlockHeightDivide : mBlockHeight);
         }
-
         //通过日志可以看出，首次，getWidth和getHeight是获取不到值的，所以取getMeasuredWidth和getMeasuredHeight
         l.d(TAG, "maxHorizontalScrollDistance before:" + mMaxHorizontalScrollDistance);
         //可用最大滑动值的计算方式是获得两个滑块的中心点的x坐标的差值的最大值，就是最大宽度减去左右padding再减去两个滑块的半宽
@@ -495,20 +498,25 @@ public class ScrollVerifyView extends ImageView {
     private Bitmap getMovableBitmap(Bitmap srcBitmap) {
         Bitmap b = GraphicTools.drawable2Bitmap(mMovableBlockDrawable);
         b = GraphicTools.scalePostBitmap(b, ((float) mBlockWidth) / b.getWidth(), ((float) mBlockHeight) / b.getHeight());
+        //之前这样写，旋转角度后可能会导致滑块图像变形
         if (isOpenRandomRotate) {
             b = GraphicTools.rotatePostBitmap(b, mRotateDegree);
             b = GraphicTools.scalePostBitmap(b, ((float) mBlockWidth) / b.getWidth(), ((float) mBlockHeight) / b.getHeight());
         }
-        Bitmap resultBmp = Bitmap.createBitmap(mBlockWidth, mBlockHeight, Bitmap.Config.ARGB_8888);
+        /*int blockWidth = b.getWidth();
+        int blockHeight = b.getHeight();*/
+        int blockWidth=mBlockWidth;
+        int blockHeight=mBlockHeight;
+        Bitmap resultBmp = Bitmap.createBitmap(blockWidth, blockHeight, Bitmap.Config.ARGB_8888);
         Paint paint = new Paint();
         paint.setAntiAlias(true);
         paint.setDither(true);
         Canvas canvas = new Canvas(resultBmp);
-        canvas.drawBitmap(b, new Rect(0, 0, mBlockWidth, mBlockHeight), new Rect(0, 0, mBlockWidth, mBlockHeight),
+        canvas.drawBitmap(b, new Rect(0, 0, blockWidth, blockHeight), new Rect(0, 0, blockWidth, blockHeight),
                 paint);
         // 选择交集去上层图片
         paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.MULTIPLY));
-        canvas.drawBitmap(srcBitmap, new Rect(0, 0, mBlockWidth, mBlockHeight), new Rect(0, 0, mBlockWidth, mBlockHeight), paint);
+        canvas.drawBitmap(srcBitmap, new Rect(0, 0, blockWidth, blockHeight), new Rect(0, 0, blockWidth, blockHeight), paint);
         return resultBmp;
     }
 
@@ -721,6 +729,7 @@ public class ScrollVerifyView extends ImageView {
 
     /**
      * 设置是否开启随机旋转滑块角度
+     *
      * @param openRandomRotate
      */
     public void setOpenRandomRotate(boolean openRandomRotate) {

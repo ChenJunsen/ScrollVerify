@@ -46,9 +46,12 @@ public class GraphicTools {
 
     public static Bitmap rotatePostBitmap(Bitmap bmp, float degree) {
         validBmp(bmp);
+        int bmpWidth = bmp.getWidth();
+        int bmpHeight = bmp.getHeight();
         Matrix matrix = new Matrix();
-        matrix.postRotate(degree);
-        return Bitmap.createBitmap(bmp, 0, 0, bmp.getWidth(), bmp.getHeight(), matrix, true);
+//        matrix.postRotate(degree);
+        matrix.postRotate(degree, bmpWidth / 2, bmpHeight / 2);
+        return Bitmap.createBitmap(bmp, 0, 0, bmpWidth, bmpHeight, matrix, true);
     }
 
     private static void validBmp(Bitmap bmp) {

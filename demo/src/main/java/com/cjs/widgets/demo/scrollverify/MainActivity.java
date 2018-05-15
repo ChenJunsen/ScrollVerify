@@ -16,17 +16,19 @@ import java.io.File;
 
 public class MainActivity extends Activity {
     private ScrollVerifyView svv;
-    private Button btn_invalidate;
+    private Button btn_reset;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         svv = findViewById(R.id.svv);
-        btn_invalidate = findViewById(R.id.btn_invalidate);
-        btn_invalidate.setOnClickListener(new View.OnClickListener() {
+        svv.setOpenRandomRotate(true);
+        btn_reset = findViewById(R.id.btn_reset);
+        btn_reset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                svv.reset();
             }
         });
     }
@@ -36,12 +38,12 @@ public class MainActivity extends Activity {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
             intent.addCategory(Intent.CATEGORY_DEFAULT);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            Uri uri = Uri.fromFile(new File(Environment.getExternalStorageDirectory()+File.separator+"eee"+File.separator+"a.xlsx"));
+            Uri uri = Uri.fromFile(new File(Environment.getExternalStorageDirectory() + File.separator + "eee" + File.separator + "a.xlsx"));
             intent.setDataAndType(uri, "application/vnd.ms-excel");
         } else {
             // 声明需要的临时权限
             // 第二个参数，即第一步中配置的authorities
-            Uri contentUri = FileProvider.getUriForFile(getApplicationContext(), BuildConfig.APPLICATION_ID + ".provider", new File(Environment.getExternalStorageDirectory()+File.separator+"eee"+File.separator+"a.xlsx"));
+            Uri contentUri = FileProvider.getUriForFile(getApplicationContext(), BuildConfig.APPLICATION_ID + ".provider", new File(Environment.getExternalStorageDirectory() + File.separator + "eee" + File.separator + "a.xlsx"));
             intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
             intent.setDataAndType(contentUri, "application/vnd.ms-excel");
         }

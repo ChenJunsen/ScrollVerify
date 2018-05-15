@@ -16,9 +16,9 @@
         android:src="@mipmap/pic2"/>
 
     <Button
-        android:id="@+id/btn_invalidate"
+        android:id="@+id/btn_reset"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="invalidate"/>
+        android:text="重置"/>
 
 </LinearLayout>
